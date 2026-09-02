@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameZone | Tienda de Videojuegos</title>
+    <style>
+        /* ===== RESET Y BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: linear-gradient(90deg, #1a1f36, #0d1020);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #7c3aed;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #7c3aed;
+        }
+
+        .logo .gamepad-icon {
+            font-size: 1.6rem;
+            margin-right: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #b0b5cc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(124, 58, 237, 0.2);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: radial-gradient(ellipse at top, #1e1b4b 0%, #0a0e1a 70%);
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+            position: relative;
+        }
+
+        .hero h1 span {
+            color: #7c3aed;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #b0b5cc;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: #fff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            position: relative;
+        }
+
+        /* ===== GRID DE JUEGOS ===== */
+        .catalogo {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            flex: 1;
+        }
+
+        .catalogo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .catalogo-header h2 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .catalogo-header h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed, #ec4899);
+            border-radius: 2px;
+            margin-top: 8px;
+        }
+
+        .contador {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid #7c3aed;
+            color: #c4b5fd;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .grid-juegos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* ===== TARJETA DE JUEGO ===== */
+        .tarjeta {
+            background: linear-gradient(145deg, #151a30, #101426);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            border-color: #7c3aed;
+        }
+
+        .tarjeta-encabezado {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .tarjeta-encabezado .icono {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .tarjeta-encabezado h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+
+        .genero {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.3);
+            color: #c4b5fd;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .tarjeta-cuerpo {
+            padding: 1.2rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tarjeta-cuerpo p {
+            color: #9ca3c0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .precio {
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+
+        .btn-comprar {
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: #fff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s;
+            width: 100%;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-comprar:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #0d1020;
+            border-top: 2px solid #7c3aed;
+            text-align: center;
+            padding: 1.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .footer span {
+            color: #7c3aed;
+            font-weight: 700;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .grid-juegos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="gamepad-icon">🎮</span>Game<span>Zone</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Catálogo</a></li>
+            <li><a href="#">Novedades</a></li>
+            <li><a href="#">Ofertas</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <h1>Bienvenido a <span>GameZone</span></h1>
+        <p>Descubre los mejores videojuegos para todas las plataformas. Nuevos lanzamientos, clásicos y grandes ofertas te esperan.</p>
+        <span class="badge">🔥 25 Juegos Disponibles</span>
+    </section>
+
+    <!-- ===== CATÁLOGO DE JUEGOS ===== -->
+    <main class="catalogo">
+        <div class="catalogo-header">
+            <h2>Catálogo de Juegos</h2>
+            <span class="contador">🎮 {{ juegos|length }} títulos</span>
+        </div>
+
+        <div class="grid-juegos">
+            {% for juego in juegos %}
+            <article class="tarjeta">
+                <div class="tarjeta-encabezado">
+                    <span class="icono">🎮</span>
+                    <h3>{{ juego.nombre }}</h3>
+                    <span class="genero">Aventura</span>
+                </div>
+                <div class="tarjeta-cuerpo">
+                    <p>{{ juego.descripcion }}</p>
+                    <div class="precio">CLP $29.990</div>
+                    <button class="btn-comprar">Añadir al carrito</button>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>© 2026 <span>GameZone</span> — Todos los derechos reservados. Hecho con 💜 para gamers.</p>
+    </footer>
+</body>
+</html>
